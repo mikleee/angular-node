@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+
+<style>
+
+    .chess-row {
+        display: flex;
+    }
+
+    .chess-cell {
+        width: 40px;
+        height: 40px;
+    }
+
+    .dark {
+        background-color: saddlebrown;
+    }
+
+    .light {
+        background-color: lightgray;
+    }
+
+</style>
+
+<body>
+<fieldset>
+    <legend>спопоб 1 (recommended)</legend>
+    <div id="chess1" class="chess"></div>
+</fieldset>
+
+<fieldset>
+    <legend>спопоб 2</legend>
+    <div id="chess2" class="chess"></div>
+</fieldset>
+
+
+<script>
+    // way 1 (recommended)
+    (() => {
+
+        // prepare state to render based on that
+        const chessMatrix = [];
+        while (chessMatrix.length < 8) {
+            const row = [];
+            chessMatrix.push(row);
+
+            // to make each next row to start rendering from different color
+            let rowsCursor = chessMatrix.length % 2 ? 0 : 1;
+
+            while (row.length < 8) {
+                row.push({
+                    color: (rowsCursor + row.length) % 2 ? 'dark' : 'light'
+                });
+            }
+        }
+
+        // rendering
+        let chessContainer = document.getElementById('chess1');
+        chessMatrix.forEach(row => {
+            let rowElement = document.createElement('div');
+            rowElement.classList.add('chess-row')
+            chessContainer.appendChild(rowElement);
+
+            row.forEach(cell => {
+                let cellElement = document.createElement('div');
+                cellElement.classList.add('chess-cell');
+                cellElement.classList.add(cell.color);
+                rowElement.appendChild(cellElement)
+            })
+        });
+
+    })();
+
+
+    // way 2
+    (() => {
+
+        let chessContainer = document.getElementById('chess2');
+        for (let i = 0; i < 8; i++) {
+            let rowElement = document.createElement('div');
+            rowElement.classList.add('chess-row')
+            chessContainer.appendChild(rowElement);
+
+            // to make each next row to start rendering from different color
+            let rowsCursor = i % 2 ? 1 : 0;
+
+            for (let j = 0; j < 8; j++) {
+                let cellElement = document.createElement('div');
+                cellElement.classList.add('chess-cell');
+                cellElement.classList.add((rowsCursor + j) % 2 ? 'dark' : 'light');
+                rowElement.appendChild(cellElement)
+            }
+        }
+
+    })();
+
+</script>
+
+
+</body>
+</html>
